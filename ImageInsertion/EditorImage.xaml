@@ -1,0 +1,84 @@
+<UserControl  
+    x:Name="canvasStretch"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="Microsoft.VisualStudio.ImageInsertion.EditorImage"
+    MinHeight="70"
+    MinWidth="70">
+    <UserControl.Resources>
+        <Brush x:Key="DefaultResizeBackgroundColor">Black</Brush>
+        <Brush x:Key="DefaultResizeContentColor">White</Brush>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+
+        <Image Name="image" x:FieldModifier="private"
+                   Width="{Binding ElementName=canvasStretch, Path=Width}"
+                   Height="{Binding ElementName=canvasStretch, Path=Height}"            
+                   Stretch="Fill" />
+
+        <Grid Name="CloseButtonGrid" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="-10,-10,0,0" x:FieldModifier="private" MouseLeftButtonUp="CloseButton_MouseLeftButtonUp" Visibility="Hidden">
+            <Ellipse Fill="{StaticResource DefaultResizeBackgroundColor}" Width="20" Height="20" Stretch="Fill"  />
+            <Line X1="0" Y1="0" X2="10" Y2="10" Stroke="White" StrokeThickness="2" Margin="5,5,0,0"  />
+            <Line X1="10" Y1="0" X2="0" Y2="10" Stroke="White" StrokeThickness="2" Margin="5,5,0,0" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Thumb Name="verticalResizeThumb" Grid.Column="1" Margin="0,-10,10,0" Height="20" x:FieldModifier="private" Cursor="SizeNS" DragDelta="AdjustVerticalChange" MouseEnter="ResizeThumb_MouseEnter" MouseLeave="ResizeThumb_MouseLeave" Visibility="Hidden">
+                <Thumb.Template>
+                    <ControlTemplate>
+                        <Border CornerRadius="10,0,0,10" Background="{StaticResource DefaultResizeBackgroundColor}" Opacity="0.8">
+                            <Path Data="M8,40L8,24 0,24 16,0 32,24 24,24 24,40z" Stretch="Fill" Width="10" Height="14" FlowDirection="RightToLeft" HorizontalAlignment="Left" Stroke="{StaticResource DefaultResizeContentColor}" Fill="{StaticResource DefaultResizeContentColor}" StrokeThickness="1.2">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="180" CenterY="7" CenterX="7" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Thumb Name="horizontalResizeThumb" Width="20" Margin="-10,0,0,10" Grid.Row="1" x:FieldModifier="private" Cursor="SizeWE" DragDelta="AdjustHorizontalChange" MouseEnter="ResizeThumb_MouseEnter" MouseLeave="ResizeThumb_MouseLeave" Visibility="Hidden">
+                <Thumb.Template>
+                    <ControlTemplate>
+                        <Border CornerRadius="10,10,0,0" Background="{StaticResource DefaultResizeBackgroundColor}" Opacity="0.8">
+                            <Path Data="M8,40L8,24 0,24 16,0 32,24 24,24 24,40z" Stretch="Fill" Width="10" Height="14" FlowDirection="RightToLeft" VerticalAlignment="Top" Stroke="{StaticResource DefaultResizeContentColor}" Fill="{StaticResource DefaultResizeContentColor}" StrokeThickness="1.2">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="90" CenterY="8" CenterX="4" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+        </Grid>
+        <Thumb Name="horizontalAndVerticalResizeThumb" Grid.Column="1" Grid.Row="1" Width="20" Height="20" x:FieldModifier="private" Margin="-10,-10,0,0" Cursor="SizeNWSE" DragDelta="AdjustHorizontalAndVerticalChange" MouseEnter="ResizeThumb_MouseEnter" MouseLeave="ResizeThumb_MouseLeave" Visibility="Hidden">
+            <Thumb.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="0,0,10,0" Background="{StaticResource DefaultResizeBackgroundColor}" Opacity="0.8">
+                        <Path Data="M8,40L8,24 0,24 16,0 32,24 24,24 24,40z" Stretch="Fill" Width="10" Height="14" FlowDirection="RightToLeft"  VerticalAlignment="Top" Stroke="{StaticResource DefaultResizeContentColor}" Fill="{StaticResource DefaultResizeContentColor}"  StrokeThickness="1.2">
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="135" CenterY="7" CenterX="4" />
+                            </Path.RenderTransform>
+                        </Path>
+                    </Border>
+                </ControlTemplate>
+            </Thumb.Template>
+        </Thumb>
+    </Grid>
+</UserControl>
